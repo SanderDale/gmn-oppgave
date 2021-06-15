@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import { stationURL, availabilityURL } from "../constants/api";
+import { motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBicycle, faParking } from "@fortawesome/free-solid-svg-icons";
+import { stationURL, availabilityURL } from "../constants/api";
 
 function BikeList() {
 	const [stations, setStations] = useState([]);
@@ -18,11 +19,11 @@ function BikeList() {
 				let availabilityArray = data[1].data.stations;
 				const finalArray = stationArray.map((stationArray) => ({
 					...stationArray,
-					...availabilityArray.find((sa) => sa.station_id === stationArray.station_id),
+					...availabilityArray.find((availabilityArray) => availabilityArray.station_id === stationArray.station_id),
 				}));
 				setStations(finalArray);
 			} catch (error) {
-				setError(error.toString());
+				setError("An error occurred during fetching of data. Please try again later.");
 			} finally {
 				setLoading(false);
 			}
@@ -35,14 +36,19 @@ function BikeList() {
 	}
 
 	if (error) {
-		return <div>An error occurred: {error}</div>;
+		return <div className="error-message">{error}</div>;
 	}
 
 	return (
 		<div className="bike-list">
 			{stations.map(function (station) {
 				return (
-					<div className="bike-card" key={station.station_id}>
+					<motion.div
+						className="bike-card"
+						key={station.station_id}
+						initial={{ x: -500 }}
+						animate={{ x: 0 }}
+						transition={{ duration: 0.5, type: "spring" }}>
 						<h4>{station.name}</h4>
 						<div className="bike-card-status">
 							<p>
@@ -54,7 +60,7 @@ function BikeList() {
 								Ledige plasser: {station.num_docks_available}
 							</p>
 						</div>
-					</div>
+					</motion.div>
 				);
 			})}
 		</div>

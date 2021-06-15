@@ -9,6 +9,7 @@
 	margin: 60px;
 	color: #005fc9;
 	font-size: 80px;
+	text-align: center;
 }
 
 .bike-list {
@@ -60,7 +61,7 @@
 /*Loader*/
 
 .loader {
-	--color: black;
+	--color: #005fc9;
 	--size-mid: 8vmin;
 	--size-dot: 1.5vmin;
 	--size-bar: 0.4vmin;
@@ -102,4 +103,12 @@
 	100% {
 		transform: rotate(1turn);
 	}
+}
+/* Error Message */
+.error-message {
+	font-size: 1.3em;
+	height: 40vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
